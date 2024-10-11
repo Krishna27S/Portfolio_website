@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { FaBehance, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
-import { gsap } from 'gsap';
 
 function About() {
   const controls = useAnimation();
@@ -73,23 +72,17 @@ function About() {
         >
           <div className="flex flex-col md:flex-row">
             <motion.div 
-              className="md:w-1/3 bg-cyan-600 relative overflow-hidden"
+              className="md:w-1/3 relative overflow-hidden"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             >
               <motion.img 
-                src="{aboutMeImage}" 
+                src="./src/assets/aboutme.jpeg" 
                 alt="Krishna Shekhar" 
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
-              />
-              <motion.div
-                className="absolute inset-0 bg-cyan-400 mix-blend-overlay"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
-                transition={{ duration: 1, delay: 0.5 }}
               />
             </motion.div>
             
