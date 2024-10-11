@@ -79,7 +79,7 @@ function About() {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             >
               <motion.img 
-                src="./src/assets/aboutme.jpeg" 
+                src="{aboutMeImage}" 
                 alt="Krishna Shekhar" 
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.05 }}

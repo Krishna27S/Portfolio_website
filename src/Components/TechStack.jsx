@@ -22,7 +22,13 @@ function TechStack() {
   const backgroundRef = useRef(null);
 
   useEffect(() => {
-    // ... (keep the existing particle animation code)
+    // Define the handleResize function here
+    const handleResize = () => {
+      console.log("Window resized");
+      // Add any custom resize handling logic here
+    };
+
+    window.addEventListener('resize', handleResize);
 
     controls.start({ opacity: 1, y: 0 });
 
