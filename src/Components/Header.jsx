@@ -30,15 +30,16 @@ function Header() {
 
   return (
     <motion.header 
-      className={`py-4 px-6 w-full fixed top-0 z-50 transition-colors duration-300 ${isScrolled ? 'bg-black bg-opacity-90' : 'bg-transparent'}`}
+      className={`py-4 px-6 w-full fixed top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black bg-opacity-90 backdrop-blur-md' : 'bg-transparent'}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <motion.div 
           className="text-xl font-bold text-cyan-400"
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, color: "#22d3ee" }}
+          transition={{ duration: 0.2 }}
         >
           Krishna Shekhar.
         </motion.div>
@@ -46,12 +47,14 @@ function Header() {
           <ul className="flex space-x-6">
             {['home', 'about', 'tech-stack', 'projects', 'contact'].map((item) => (
               <motion.li key={item} whileHover={{ scale: 1.1 }}>
-                <button 
+                <motion.button 
                   onClick={() => scrollToSection(item)} 
                   className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
-                </button>
+                </motion.button>
               </motion.li>
             ))}
           </ul>
@@ -69,7 +72,8 @@ function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-400 hover:text-cyan-300 transition-colors"
-              whileHover={{ scale: 1.2, rotate: 15 }}
+              whileHover={{ scale: 1.2, rotate: 15, color: "#22d3ee" }}
+              whileTap={{ scale: 0.9 }}
             >
               <item.icon />
             </motion.a>
