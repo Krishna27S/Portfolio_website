@@ -17,7 +17,7 @@ const projects = [
     image: "/assets/portfolio.png",
     technologies: "React.js, Tailwind CSS",
     github: "https://github.com/abhinavx04/portfolio-website",
-    live: "https://your-portfolio-url.com"
+    live: "https://portfolio-website-silk-xi-60.vercel.app/"
   },
   {
     title: "Amazon Clone",
