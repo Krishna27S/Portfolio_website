@@ -77,13 +77,13 @@ function About() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             >
-              <motion.img 
-                src="./src/assets/aboutme.jpeg" 
-                alt="Krishna Shekhar" 
-                className="w-full h-full object-cover"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              />
+            <motion.img 
+  src="/assets/aboutme.jpeg" 
+  alt="Krishna Shekhar" 
+  className="w-full h-full object-cover"
+  whileHover={{ scale: 1.05 }}
+  transition={{ duration: 0.3 }}
+/>
             </motion.div>
             
             <motion.div 

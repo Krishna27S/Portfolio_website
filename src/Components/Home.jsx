@@ -124,10 +124,10 @@ function Home() {
             transition={{ duration: 0.3 }}
           >
             <img 
-              src="./src/assets/bck_img.jpeg"
-              alt="Krishna Shekhar" 
-              className="w-full h-full object-cover"
-            />
+  src="/assets/bck_img.jpeg"
+  alt="Krishna Shekhar" 
+  className="w-full h-full object-cover"
+/>
           </motion.div>
         </motion.div>
       </div>

@@ -6,7 +6,7 @@ const projects = [
   {
     title: "Spotify Clone",
     description: "A clone of the popular music streaming platform Spotify.",
-    image: "./src/assets/spotify.png",
+    image: "/assets/spotify.png",
     technologies: "React.js, Tailwind CSS",
     github: "https://github.com/Krishna27S/Spotify_clone.git",
     live: "https://spotify-clone-gilt-xi.vercel.app/"
@@ -14,7 +14,7 @@ const projects = [
   {
     title: "Portfolio Website",
     description: "A personal portfolio website showcasing my projects and skills.",
-    image: "./src/assets/portfolio.png",
+    image: "/assets/portfolio.png",
     technologies: "React.js, Tailwind CSS",
     github: "https://github.com/abhinavx04/portfolio-website",
     live: "https://your-portfolio-url.com"
@@ -22,7 +22,7 @@ const projects = [
   {
     title: "Amazon Clone",
     description: "A clone of the popular shopping platform Amazon.",
-    image: "./src/assets/amazon.png",
+    image: "/assets/amazon.png",
     technologies: "React.js, Tailwind CSS",
     github: "https://github.com/Krishna27S/Amazon-clone.git",
     live: "https://your-spotify-clone-url.com"
@@ -30,7 +30,7 @@ const projects = [
   {
     title: "MakeMyTrip Clone",
     description: "A clone of the popular travel booking website MakeMyTrip.",
-    image: "./src/assets/mmt.png",
+    image: "/assets/mmt.png",
     technologies: "HTML, CSS",
     github: "https://github.com/abhinavx04/makemytripclone",
     live: "https://your-makemytrip-clone-url.com"
@@ -38,7 +38,7 @@ const projects = [
   {
     title: "Cuvette Tech Clone",
     description: "A clone of the Cuvette Tech website.",
-    image: "./src/assets/cuvette.png",
+    image: "/assets/cuvette.png",
     technologies: "HTML, CSS, MongoDB",
     github: "hhttps://github.com/Krishna27S/InternXConnect.git",
     live: "https://your-cuvette-tech-clone-url.com"
@@ -46,7 +46,7 @@ const projects = [
   {
     title: "RemoveBg Web App",
     description: "A web application to remove backgrounds from images.",
-    image: "./src/assets/removebg.png",
+    image: "/assets/removebg.png",
     technologies: "HTML, CSS, JavaScript, API Integration",
     github: "https://github.com/Krishna27S/RemoveBG.git",
     live: "https://removebg-inky.vercel.app/"
@@ -54,7 +54,7 @@ const projects = [
   {
     title: "Url shortner",
     description: "A web application to shorten url.",
-    image: "./src/assets/urlshort.png",
+    image: "/assets/urlshort.png",
     technologies: "HTML, CSS, JavaScript, API Integration",
     github: "https://github.com/Krishna27S/Url-shortner.git",
     // live: "https://removebg-inky.vercel.app/"
@@ -62,7 +62,7 @@ const projects = [
   {
     title: "Events Management",
     description: "A web application to ADD,EDIT,DELETE your events.",
-    image: "./src/assets/events.png",
+    image: "/assets/events.png",
     technologies: "HTML, CSS, JavaScript, API Integration, MongoDB",
     github: "https://github.com/Krishna27S/Events-API.git",
     live: "https://events-6t8m3pudm-krishna-shekhars-projects.vercel.app/"
