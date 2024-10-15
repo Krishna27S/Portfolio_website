@@ -1,137 +1,180 @@
-// src/components/Home.jsx
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs } from 'react-icons/fa';
 
 function Home() {
+  const [isHovered, setIsHovered] = useState(false);
+  const controlsLeft = useAnimation();
+  const controlsRight = useAnimation();
   const backgroundRef = useRef(null);
-  const photoRef = useRef(null);
+  const [text, setText] = useState('');
+  const [index, setIndex] = useState(0);
+  const fullText = "Full-stack Developer";
 
   useEffect(() => {
-    const particles = [];
-    const colors = ['#22d3ee', '#67e8f9', '#a5f3fc', '#cffafe'];
-    const particleCount = 50;
+    if (index < fullText.length) {
+      setTimeout(() => {
+        setText(text + fullText[index]);
+        setIndex(index + 1);
+      }, 100);
+    }
+  }, [index, text]);
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: Math.random() * 5 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
+  // ... (keep the existing useEffect for background animation)
+
+  useEffect(() => {
+    if (isHovered) {
+      controlsLeft.start({ width: '60%' });
+      controlsRight.start({ width: '40%' });
+    } else {
+      controlsLeft.start({ width: '55%' });
+      controlsRight.start({ width: '45%' });
+    }
+  }, [isHovered, controlsLeft, controlsRight]);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 64;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       });
     }
+  };
 
-    const canvas = backgroundRef.current;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        ctx.fillStyle = particle.color;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        particle.x += Math.random() * 2 - 1;
-        particle.y += Math.random() * 2 - 1;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.x = Math.random() * canvas.width;
-        if (particle.y < 0 || particle.y > canvas.height) particle.y = Math.random() * canvas.height;
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    gsap.to(photoRef.current, {
-      boxShadow: '0 0 30px 15px rgba(6, 182, 212, 0.8), 0 0 60px 30px rgba(6, 182, 212, 0.6)',
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const floatingIcons = [
+    { Icon: FaHtml5, color: '#E34F26' },
+    { Icon: FaCss3Alt, color: '#1572B6' },
+    { Icon: FaJs, color: '#F7DF1E' },
+    { Icon: FaReact, color: '#61DAFB' },
+    { Icon: FaNodeJs, color: '#339933' }
+  ];
 
   return (
-    <section 
-      id="home" 
-      className="section relative flex items-center justify-center overflow-hidden min-h-screen"
-      style={{
-        background: 'linear-gradient(45deg, #0f172a, #1e293b)',
-      }}
-    >
+    <div className="relative w-full h-screen overflow-hidden">
       <canvas ref={backgroundRef} className="absolute inset-0" />
       
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between px-6 max-w-6xl mx-auto w-full">
-        <motion.div 
-          className="text-left md:w-1/2 mb-8 md:mb-0"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+      <div className="relative z-10 w-full h-full flex">
+        <motion.div
+          className="h-full bg-opacity-50 bg-black flex items-center justify-center relative"
+          initial={{ width: '55%' }}
+          animate={controlsLeft}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-cyan-400">
-            Hey, I'm <span className="text-white">Krishna</span>
-          </h1>
-          <p className="text-xl mb-8 text-cyan-100">
-            Web developer with a deep passion for building remarkable digital experiences.
-          </p>
-          <div className="space-x-4">
-            <motion.button 
-              className="bg-cyan-500 text-black px-6 py-2 rounded-full hover:bg-cyan-400 transition duration-300"
-              whileHover={{ scale: 1.05, backgroundColor: "#22d3ee" }}
-              whileTap={{ scale: 0.95 }}
+          <div className="text-left p-8 max-w-lg">
+            <motion.h1 
+              className="text-5xl md:text-6xl font-bold mb-4 text-white"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              About Me
-            </motion.button>
-            <motion.button 
-              className="bg-transparent border-2 border-cyan-500 text-cyan-400 px-6 py-2 rounded-full hover:bg-cyan-500 hover:text-black transition duration-300"
-              whileHover={{ scale: 1.05, backgroundColor: "#22d3ee", color: "#000000" }}
-              whileTap={{ scale: 0.95 }}
+              I'm <span className="text-teal-400">Krishna</span>
+            </motion.h1>
+            <motion.p 
+              className="text-xl mb-8 text-gray-300"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              My Works
-            </motion.button>
+              Web developer crafting immersive digital experiences
+            </motion.p>
+            <motion.div
+              className="space-x-4"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <motion.button 
+                className="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-400 transition duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToSection('about')}
+              >
+                About Me
+              </motion.button>
+              <motion.button 
+                className="bg-transparent border-2 border-teal-500 text-teal-400 px-6 py-2 rounded-md hover:bg-teal-500 hover:text-white transition duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToSection('projects')}
+              >
+                My Works
+              </motion.button>
+            </motion.div>
           </div>
+          <motion.div
+            className="absolute -right-16 top-1/2 transform -translate-y-1/2 w-32 h-64 bg-teal-500 rounded-l-full"
+            initial={{ x: 100 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          />
         </motion.div>
 
-        <motion.div 
-          className="md:w-1/2 flex justify-center"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        <motion.div
+          className="h-full bg-opacity-50 bg-black flex items-center justify-center relative cursor-pointer overflow-hidden"
+          initial={{ width: '45%' }}
+          animate={controlsRight}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
         >
           <motion.div 
-            ref={photoRef}
-            className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-cyan-400 shadow-lg"
-            style={{
-              boxShadow: '0 0 20px 10px rgba(6, 182, 212, 0.6), 0 0 40px 20px rgba(6, 182, 212, 0.4)',
-            }}
-            whileHover={{ scale: 1.05 }}
+            className="w-full h-full"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: isHovered ? 1.05 : 1 }}
             transition={{ duration: 0.3 }}
           >
             <img 
-  src="/assets/bck_img.jpeg"
-  alt="Krishna Shekhar" 
-  className="w-full h-full object-cover"
-/>
+              src="/assets/bck_img2.jpeg"
+              alt="Krishna Shekhar" 
+              className="w-full h-full object-cover object-center"
+            />
+          </motion.div>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
+            initial={{ opacity: 0.5 }}
+            animate={{ opacity: isHovered ? 0.3 : 0.5 }}
+            transition={{ duration: 0.3 }}
+          />
+          <motion.div
+            className="absolute bottom-8 left-8 text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1 }}
+          >
+            <h2 className="text-3xl font-bold mb-2">Krishna Shekhar</h2>
+            <p className="text-white font-bold">{text}</p>
           </motion.div>
         </motion.div>
       </div>
-    </section>
+
+      {floatingIcons.map((icon, index) => (
+        <motion.div
+          key={index}
+          className="absolute text-3xl"
+          initial={{
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+          }}
+          animate={{
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            rotate: 360,
+          }}
+          transition={{
+            duration: Math.random() * 10 + 10,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        >
+          <icon.Icon color={icon.color} />
+        </motion.div>
+      ))}
+    </div>
   );
 }
 

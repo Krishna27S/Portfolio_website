@@ -1,41 +1,24 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaReact, FaHtml5, FaCss3Alt, FaJs, FaNodeJs, FaGitAlt, FaJava } from 'react-icons/fa';
 import { SiTailwindcss, SiMongodb, SiExpress, SiCplusplus } from 'react-icons/si';
 
 const technologies = [
-  { name: 'React', icon: FaReact, color: '#61DAFB' },
-  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
-  { name: 'Node.js', icon: FaNodeJs, color: '#339933' },
-  { name: 'Express.js', icon: SiExpress, color: '#000000' },
-  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
-  { name: 'HTML5', icon: FaHtml5, color: '#E34F26' },
-  { name: 'CSS3', icon: FaCss3Alt, color: '#1572B6' },
-  { name: 'JavaScript', icon: FaJs, color: '#F7DF1E' },
-  { name: 'C/C++', icon: SiCplusplus, color: '#00599C' },
-  { name: 'Java', icon: FaJava, color: '#007396' },
-  { name: 'Git', icon: FaGitAlt, color: '#F05032' }
+  { name: 'React', icon: FaReact, color: '#61DAFB', info: 'A JavaScript library for building user interfaces' },
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248', info: 'A document-based, distributed database' },
+  { name: 'Node.js', icon: FaNodeJs, color: '#339933', info: 'JavaScript runtime built on Chrome\'s V8 JavaScript engine' },
+  { name: 'Express.js', icon: SiExpress, color: '#ffffff', info: 'Fast, unopinionated, minimalist web framework for Node.js' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', info: 'A utility-first CSS framework for rapid UI development' },
+  { name: 'HTML5', icon: FaHtml5, color: '#E34F26', info: 'The latest evolution of the standard that defines HTML' },
+  { name: 'CSS3', icon: FaCss3Alt, color: '#1572B6', info: 'The latest evolution of the Cascading Style Sheets language' },
+  { name: 'JavaScript', icon: FaJs, color: '#F7DF1E', info: 'A lightweight, interpreted, or just-in-time compiled programming language' },
+  { name: 'C/C++', icon: SiCplusplus, color: '#00599C', info: 'Powerful, high-performance programming languages' },
+  { name: 'Java', icon: FaJava, color: '#007396', info: 'A versatile, object-oriented programming language' },
+  { name: 'Git', icon: FaGitAlt, color: '#F05032', info: 'A distributed version control system' }
 ];
 
 function TechStack() {
-  const controls = useAnimation();
-  const backgroundRef = useRef(null);
-
-  useEffect(() => {
-    // Define the handleResize function here
-    const handleResize = () => {
-      console.log("Window resized");
-      // Add any custom resize handling logic here
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    controls.start({ opacity: 1, y: 0 });
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [controls]);
+  const [selectedTech, setSelectedTech] = useState(null);
 
   const tileVariants = {
     hidden: { opacity: 0, scale: 0.8 },
@@ -50,43 +33,37 @@ function TechStack() {
       },
     }),
     hover: {
-      scale: 1.1,
-      rotate: [0, 5, -5, 0],
+      scale: 1.05,
+      rotateY: 5,
+      rotateX: 5,
+      boxShadow: "0 0 25px rgba(0, 255, 255, 0.5)",
       transition: {
         duration: 0.3,
       },
     },
     tap: {
       scale: 0.95,
-      rotate: 0,
+      rotateY: 0,
+      rotateX: 0,
     },
   };
 
-  const iconVariants = {
-    hidden: { rotate: 0 },
-    visible: {
-      rotate: 360,
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "linear",
-      },
-    },
+  const infoVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { opacity: 1, height: 'auto', transition: { duration: 0.3 } },
   };
 
   return (
-    <section id="tech-stack" className="section px-4 py-16 relative overflow-hidden">
-      <canvas ref={backgroundRef} className="absolute inset-0" style={{ zIndex: -1 }} />
-      <div className="container mx-auto max-w-6xl relative z-10">
+    <section id="tech-stack" className="section min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900">
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div 
           className="relative mb-12"
           initial={{ opacity: 0, y: -20 }}
-          animate={controls}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <motion.div 
-            className="absolute top-0 left-0 bg-purple-500 rounded-md p-2"
+            className="absolute top-0 left-0 bg-teal-500 rounded-md p-2"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -126,33 +103,37 @@ function TechStack() {
           {technologies.map((tech, index) => (
             <motion.div
               key={tech.name}
-              className="bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-lg p-6 flex flex-col items-center justify-center transition-all duration-300"
+              className="bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-lg overflow-hidden transition-all duration-300"
               variants={tileVariants}
               custom={index}
               whileHover="hover"
               whileTap="tap"
+              onClick={() => setSelectedTech(selectedTech === tech.name ? null : tech.name)}
             >
-              <motion.div
-                variants={iconVariants}
-                initial="hidden"
-                animate="visible"
-              >
+              <div className="p-6 flex flex-col items-center justify-center">
                 <tech.icon size={60} color={tech.color} className="mb-4" />
-              </motion.div>
-              <motion.h3 
-                className="text-lg font-semibold text-white"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-              >
-                {tech.name}
-              </motion.h3>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-purple-500 to-green-500 opacity-0 rounded-lg"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 0.2 }}
-                transition={{ duration: 0.3 }}
-              />
+                <motion.h3 
+                  className="text-lg font-semibold text-white"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                >
+                  {tech.name}
+                </motion.h3>
+              </div>
+              <AnimatePresence>
+                {selectedTech === tech.name && (
+                  <motion.div
+                    variants={infoVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    className="px-6 pb-6"
+                  >
+                    <p className="text-gray-300 text-sm">{tech.info}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaExternalLinkAlt, FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 const projects = [
   {
@@ -25,22 +25,22 @@ const projects = [
     image: "/assets/amazon.png",
     technologies: "React.js, Tailwind CSS",
     github: "https://github.com/Krishna27S/Amazon-clone.git",
-    live: "https://your-spotify-clone-url.com"
+    live: "https://amazon-clone-beta-woad.vercel.app/"
   },
   {
     title: "MakeMyTrip Clone",
     description: "A clone of the popular travel booking website MakeMyTrip.",
     image: "/assets/mmt.png",
     technologies: "HTML, CSS",
-    github: "https://github.com/abhinavx04/makemytripclone",
-    live: "https://your-makemytrip-clone-url.com"
+    github: "https://github.com/Krishna27S/mmt_clone.git",
+    live: "https://mmt-clone-smoky.vercel.app/?vercelToolbarCode=X_lOXAvNXd-whlh"
   },
   {
     title: "Cuvette Tech Clone",
     description: "A clone of the Cuvette Tech website.",
     image: "/assets/cuvette.png",
     technologies: "HTML, CSS, MongoDB",
-    github: "hhttps://github.com/Krishna27S/InternXConnect.git",
+    github: "https://github.com/Krishna27S/InternXConnect.git",
     live: "https://your-cuvette-tech-clone-url.com"
   },
   {
@@ -48,7 +48,7 @@ const projects = [
     description: "A web application to remove backgrounds from images.",
     image: "/assets/removebg.png",
     technologies: "HTML, CSS, JavaScript, API Integration",
-    github: "https://github.com/Krishna27S/RemoveBG.git",
+    github: "https://github.com/Krishna27S/RemoveBg.git",
     live: "https://removebg-inky.vercel.app/"
   },
   {
@@ -69,10 +69,10 @@ const projects = [
   }
 ];
 
-const ProjectCard = ({ project }) => (
+const ProjectCard = ({ project, isActive }) => (
   <motion.div
-    className="bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-lg overflow-hidden shadow-lg w-full"
-    whileHover={{ y: -5, boxShadow: '0 10px 20px rgba(6, 182, 212, 0.3)' }}
+    className={`bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-lg overflow-hidden shadow-lg w-full transition-all duration-300 ${isActive ? 'scale-105 z-10' : 'scale-95 opacity-70'}`}
+    whileHover={{ scale: isActive ? 1.1 : 1, opacity: 1 }}
     transition={{ duration: 0.3 }}
   >
     <motion.img 
@@ -83,140 +83,59 @@ const ProjectCard = ({ project }) => (
       transition={{ duration: 0.3 }}
     />
     <div className="p-4">
-      <motion.h4 
-        className="text-xl font-bold text-cyan-400 mb-2"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-      >
-        {project.title}
-      </motion.h4>
-      <motion.p 
-        className="text-gray-300 text-sm mb-4"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-      >
-        {project.description}
-      </motion.p>
-      <motion.p 
-        className="text-gray-400 text-xs mb-4"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.3 }}
-      >
-        Technologies: {project.technologies}
-      </motion.p>
-      <motion.div 
-        className="flex justify-between items-center"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.4 }}
-      >
+      <h4 className="text-xl font-bold text-teal-400 mb-2">{project.title}</h4>
+      <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+      <p className="text-gray-400 text-xs mb-4">Technologies: {project.technologies}</p>
+      <div className="flex justify-between items-center">
         <motion.a 
           href={project.github} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-cyan-400 hover:text-cyan-300"
-          whileHover={{ scale: 1.1, color: "#22d3ee" }}
+          className="text-teal-400 hover:text-teal-300"
+          whileHover={{ scale: 1.1, color: "#2dd4bf" }}
           whileTap={{ scale: 0.9 }}
         >
           <FaGithub size={20} />
         </motion.a>
-        <motion.a 
-          href={project.live} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-cyan-400 hover:text-cyan-300"
-          whileHover={{ scale: 1.1, color: "#22d3ee" }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <FaExternalLinkAlt size={20} />
-        </motion.a>
-      </motion.div>
+        {project.live && (
+          <motion.a 
+            href={project.live} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-teal-400 hover:text-teal-300"
+            whileHover={{ scale: 1.1, color: "#2dd4bf" }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FaExternalLinkAlt size={20} />
+          </motion.a>
+        )}
+      </div>
     </div>
   </motion.div>
 );
 
 function Projects() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const controls = useAnimation();
-  const backgroundRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(1);
 
-  useEffect(() => {
-    const particles = [];
-    const colors = ['#22d3ee', '#67e8f9', '#a5f3fc', '#cffafe'];
-    const particleCount = 30;
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: Math.random() * 3 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-
-    const canvas = backgroundRef.current;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        ctx.fillStyle = particle.color;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        particle.x += Math.random() * 1 - 0.5;
-        particle.y += Math.random() * 1 - 0.5;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.x = Math.random() * canvas.width;
-        if (particle.y < 0 || particle.y > canvas.height) particle.y = Math.random() * canvas.height;
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    controls.start({ opacity: 1, y: 0 });
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [controls]);
-
-  const nextProjects = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
+  const nextProject = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % projects.length);
   };
 
-  const prevProjects = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + projects.length) % projects.length);
+  const prevProject = () => {
+    setActiveIndex((prevIndex) => (prevIndex - 1 + projects.length) % projects.length);
   };
 
   return (
-    <section id="projects" className="section px-4 py-16 relative overflow-hidden">
-      <canvas ref={backgroundRef} className="absolute inset-0" style={{ zIndex: -1 }} />
-      <div className="container mx-auto max-w-6xl relative z-10">
+    <section id="projects" className="section min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900">
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div 
           className="relative mb-12"
           initial={{ opacity: 0, y: -20 }}
-          animate={controls}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <motion.div 
-            className="absolute top-0 left-0 bg-cyan-500 rounded-md p-2"
+            className="absolute top-0 left-0 bg-teal-500 rounded-md p-2"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -241,42 +160,49 @@ function Projects() {
           </motion.h3>
         </motion.div>
         
-        <div className="relative">
-          <AnimatePresence mode="wait">
+        <div className="relative h-[600px] overflow-hidden">
+          <AnimatePresence initial={false}>
             <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
+              key={activeIndex}
+              className="absolute inset-0 flex flex-col items-center justify-center space-y-6"
+              initial={{ opacity: 0, y: 300 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -300 }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6"
             >
-              {[0, 1, 2].map((offset) => {
-                const project = projects[(currentIndex + offset) % projects.length];
-                return <ProjectCard key={offset} project={project} />;
+              {[-1, 0, 1].map((offset) => {
+                const index = (activeIndex + offset + projects.length) % projects.length;
+                return (
+                  <motion.div 
+                    key={index} 
+                    className="w-full max-w-lg"
+                    initial={{ opacity: 0, y: offset * 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <ProjectCard project={projects[index]} isActive={offset === 0} />
+                  </motion.div>
+                );
               })}
             </motion.div>
           </AnimatePresence>
           
-          <div className="absolute top-1/2 left-0 w-full transform -translate-y-1/2 flex items-center justify-between pointer-events-none" style={{ width: 'calc(100% + 100px)' }}>
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex flex-col space-y-4">
             <motion.button 
-              className="pointer-events-auto bg-cyan-500 text-black w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
-              style={{ marginLeft: '-50px' }}
-              whileHover={{ scale: 1.1, backgroundColor: "#22d3ee" }}
+              className="bg-teal-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
+              whileHover={{ scale: 1.1, backgroundColor: "#2dd4bf" }}
               whileTap={{ scale: 0.9 }}
-              onClick={prevProjects}
+              onClick={prevProject}
             >
-              <FaChevronLeft size={20} />
+              <FaChevronUp size={20} />
             </motion.button>
-            
             <motion.button 
-              className="pointer-events-auto bg-cyan-500 text-black w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
-              style={{ marginRight: '-50px' }}
-              whileHover={{ scale: 1.1, backgroundColor: "#22d3ee" }}
+              className="bg-teal-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50"
+              whileHover={{ scale: 1.1, backgroundColor: "#2dd4bf" }}
               whileTap={{ scale: 0.9 }}
-              onClick={nextProjects}
+              onClick={nextProject}
             >
-              <FaChevronRight size={20} />
+              <FaChevronDown size={20} />
             </motion.button>
           </div>
         </div>

@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
@@ -30,18 +29,20 @@ function Header() {
 
   return (
     <motion.header 
-      className={`py-4 px-6 w-full fixed top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black bg-opacity-90 backdrop-blur-md' : 'bg-transparent'}`}
+      className={`py-4 px-6 w-full fixed top-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-black bg-opacity-80 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <motion.div 
-          className="text-xl font-bold text-cyan-400"
-          whileHover={{ scale: 1.05, color: "#22d3ee" }}
+          className="text-2xl font-bold text-teal-400"
+          whileHover={{ scale: 1.05, color: "#4fd1c5" }}
           transition={{ duration: 0.2 }}
         >
-          Krishna Shekhar.
+          Krishna<span className="text-white">Shekhar</span>
         </motion.div>
         <nav>
           <ul className="flex space-x-6">
@@ -49,11 +50,11 @@ function Header() {
               <motion.li key={item} whileHover={{ scale: 1.1 }}>
                 <motion.button 
                   onClick={() => scrollToSection(item)} 
-                  className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                  className="text-white hover:text-teal-400 transition-colors text-sm uppercase tracking-wider"
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
                 >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  {item}
                 </motion.button>
               </motion.li>
             ))}
@@ -71,11 +72,11 @@ function Header() {
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors"
-              whileHover={{ scale: 1.2, rotate: 15, color: "#22d3ee" }}
+              className="text-white hover:text-teal-400 transition-colors"
+              whileHover={{ scale: 1.2, rotate: 15, color: "#4fd1c5" }}
               whileTap={{ scale: 0.9 }}
             >
-              <item.icon />
+              <item.icon size={20} />
             </motion.a>
           ))}
         </div>

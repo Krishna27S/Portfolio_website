@@ -1,67 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaCheck } from 'react-icons/fa';
 
 const ContactMe = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [activeField, setActiveField] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const controls = useAnimation();
-  const backgroundRef = useRef(null);
-
-  useEffect(() => {
-    const particles = [];
-    const colors = ['#22d3ee', '#67e8f9', '#a5f3fc', '#cffafe'];
-    const particleCount = 30;
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: Math.random() * 3 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-
-    const canvas = backgroundRef.current;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        ctx.fillStyle = particle.color;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        particle.x += Math.random() * 1 - 0.5;
-        particle.y += Math.random() * 1 - 0.5;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.x = Math.random() * canvas.width;
-        if (particle.y < 0 || particle.y > canvas.height) particle.y = Math.random() * canvas.height;
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    controls.start({ opacity: 1, y: 0 });
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [controls]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,87 +13,103 @@ const ContactMe = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        setIsSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setIsSubmitted(false), 3000);
-      } else {
-        throw new Error('Failed to send message');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to send message. Please try again.');
-    }
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
+  const contactInfo = [
+    { icon: FaPhone, text: "91+ 8252858249" },
+    { icon: FaEnvelope, text: "krishnashekhar27@gmail.com" },
+    { icon: FaMapMarkerAlt, text: "Chennai" }
+  ];
+
   return (
-    <section id="contact" className="py-20 px-4 bg-black relative overflow-hidden">
-      <canvas ref={backgroundRef} className="absolute inset-0" style={{ zIndex: 0 }} />
-      <div className="container mx-auto max-w-2xl relative z-10">
-        <motion.h2 
-          className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-12 text-center"
+    <section id="contact" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900 py-16">
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div 
+          className="relative mb-12"
           initial={{ opacity: 0, y: -20 }}
-          animate={controls}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          CONTACT
-        </motion.h2>
-        <motion.div 
-          className="bg-gray-900 bg-opacity-50 backdrop-blur-md rounded-3xl p-8 shadow-2xl relative"
-          initial={{ opacity: 0, y: 50 }}
-          animate={controls}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-        >
-          {/* Futuristic border effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cyan-400 via-blue-500 to-cyan-400 rounded-3xl z-0 animate-pulse" style={{ padding: '2px' }}>
-            <div className="bg-gray-900 bg-opacity-50 w-full h-full rounded-3xl"></div>
-          </div>
-          
-          <div className="relative z-10 space-y-8">
-            {/* Contact Info Section */}
-            <div className="space-y-4">
-              {[
-                { icon: FaPhone, text: "91+ 8252858249" },
-                { icon: FaEnvelope, text: "krishnashekhar27@gmail.com" },
-                { icon: FaMapMarkerAlt, text: "Chennai" }
-              ].map((item, index) => (
-                <motion.div 
+          <motion.div 
+            className="absolute top-0 left-0 bg-teal-500 rounded-md p-2"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <span className="text-black font-bold text-lg">06</span>
+          </motion.div>
+          <motion.h2 
+            className="text-4xl font-bold text-white pl-12 mb-4"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            CONTACT ME
+          </motion.h2>
+          <motion.p 
+            className="text-gray-400 pl-12"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            Let's get in touch
+          </motion.p>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row items-stretch gap-8">
+          {/* Left Column - Contact Info */}
+          <motion.div 
+            className="w-full lg:w-1/2 bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-3xl p-8 shadow-xl"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <h3 className="text-2xl font-bold text-white mb-6">Get in Touch</h3>
+            <div className="space-y-6">
+              {contactInfo.map((item, index) => (
+                <motion.div
                   key={index}
-                  className="flex items-center bg-gray-800 bg-opacity-50 p-4 rounded-xl overflow-hidden relative"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
-                  whileHover={{ scale: 1.02, backgroundColor: "rgba(31, 41, 55, 0.8)" }}
+                  className="flex items-center space-x-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.5 }}
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-0"
-                    whileHover={{ opacity: 0.2 }}
-                  />
-                  <div className="bg-gray-700 p-2 rounded-full mr-4 z-10">
-                    <item.icon className="text-cyan-400 text-xl" />
+                  <div className="bg-teal-500 p-3 rounded-full">
+                    <item.icon className="text-xl text-white" />
                   </div>
-                  <p className="text-white z-10">{item.text}</p>
+                  <p className="text-white text-lg">{item.text}</p>
                 </motion.div>
               ))}
             </div>
-            
-            {/* Form Section */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <motion.div 
+              className="mt-8 p-6 bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl shadow-lg"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
+              <h4 className="text-xl font-bold text-white mb-2">Ready to work together?</h4>
+              <p className="text-white opacity-90">I'm always open for new opportunities and exciting projects.</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column - Contact Form */}
+          <motion.div 
+            className="w-full lg:w-1/2 bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-3xl p-8 shadow-xl"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+            <h3 className="text-2xl font-bold text-white mb-6">Send Me a Message</h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
               {["name", "email", "message"].map((field, index) => (
                 <motion.div
                   key={field}
                   className="relative"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 + 0.6, duration: 0.5 }}
+                  transition={{ delay: index * 0.1 + 0.8 }}
                 >
                   <input
                     type={field === "email" ? "email" : "text"}
@@ -159,13 +119,13 @@ const ContactMe = () => {
                     onFocus={() => setActiveField(field)}
                     onBlur={() => setActiveField(null)}
                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                    className={`w-full bg-gray-800 bg-opacity-50 text-white rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition duration-300 ${field === "message" ? "h-32 resize-none" : ""}`}
+                    className={`w-full bg-gray-700 bg-opacity-50 text-white rounded-xl px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-300 ${field === "message" ? "h-32 resize-none" : ""}`}
                     required
                   />
                   <AnimatePresence>
                     {activeField === field && (
                       <motion.span
-                        className="absolute bottom-2 right-2 text-cyan-400"
+                        className="absolute bottom-2 right-2 text-teal-400"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
@@ -178,8 +138,8 @@ const ContactMe = () => {
               ))}
               <motion.button
                 type="submit"
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-3 px-6 rounded-xl transition duration-300 flex items-center justify-center overflow-hidden relative"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(6, 182, 212, 0.5)" }}
+                className="w-full bg-gradient-to-r from-teal-500 to-blue-500 text-white font-bold py-3 px-6 rounded-xl transition duration-300 flex items-center justify-center overflow-hidden relative"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(20, 184, 166, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
               >
                 <AnimatePresence>
@@ -209,16 +169,8 @@ const ContactMe = () => {
                 </AnimatePresence>
               </motion.button>
             </form>
-          </div>
-        </motion.div>
-      </div>
-      
-      {/* Enhanced futuristic background elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-cyan-500 rounded-full opacity-5 filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-blue-500 rounded-full opacity-5 filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-400 to-blue-500 opacity-20"></div>
-        <div className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-blue-500 to-cyan-400 opacity-20"></div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
