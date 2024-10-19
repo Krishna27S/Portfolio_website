@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs } from 'react-icons/fa';
 
 function Home() {
   const [isHovered, setIsHovered] = useState(false);
@@ -46,12 +45,17 @@ function Home() {
     }
   };
 
+  const openResume = () => {
+    // Replace '/path/to/your/resume.pdf' with the actual path to your resume file
+    window.open('/assets/RESUME.pdf', '_blank');
+  };
+
   const floatingIcons = [
-    { Icon: FaHtml5, color: '#E34F26' },
-    { Icon: FaCss3Alt, color: '#1572B6' },
-    { Icon: FaJs, color: '#F7DF1E' },
-    { Icon: FaReact, color: '#61DAFB' },
-    { Icon: FaNodeJs, color: '#339933' }
+    { text: 'HTML', color: '#E34F26' },
+    { text: 'CSS', color: '#1572B6' },
+    { text: 'JS', color: '#F7DF1E' },
+    { text: 'React', color: '#61DAFB' },
+    { text: 'Node', color: '#339933' }
   ];
 
   return (
@@ -104,6 +108,14 @@ function Home() {
               >
                 My Works
               </motion.button>
+              <motion.button 
+                className="bg-transparent border-2 border-teal-500 text-teal-400 px-6 py-2 rounded-md hover:bg-teal-500 hover:text-white transition duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={openResume}
+              >
+                My Resume
+              </motion.button>
             </motion.div>
           </div>
           <motion.div
@@ -155,7 +167,7 @@ function Home() {
       {floatingIcons.map((icon, index) => (
         <motion.div
           key={index}
-          className="absolute text-3xl"
+          className="absolute text-3xl font-bold"
           initial={{
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
@@ -170,8 +182,9 @@ function Home() {
             repeat: Infinity,
             repeatType: "reverse",
           }}
+          style={{ color: icon.color }}
         >
-          <icon.Icon color={icon.color} />
+          {icon.text}
         </motion.div>
       ))}
     </div>

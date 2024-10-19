@@ -28,7 +28,7 @@ const projects = [
     live: "https://amazon-clone-beta-woad.vercel.app/"
   },
   {
-    title: "MakeMyTrip Clone",
+    title: "BookingGo",
     description: "A clone of the popular travel booking website MakeMyTrip.",
     image: "/assets/mmt.png",
     technologies: "HTML, CSS",
@@ -36,7 +36,7 @@ const projects = [
     live: "https://mmt-clone-smoky.vercel.app/?vercelToolbarCode=X_lOXAvNXd-whlh"
   },
   {
-    title: "Cuvette Tech Clone",
+    title: "Job Connect",
     description: "A clone of the Cuvette Tech website.",
     image: "/assets/cuvette.png",
     technologies: "HTML, CSS, MongoDB",

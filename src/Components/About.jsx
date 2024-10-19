@@ -128,10 +128,10 @@ function About() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           >
             <p className="text-gray-300 text-lg mb-4">
-              I'm a passionate web developer with a strong focus on creating innovative and user-friendly applications. My journey in the world of coding has been exciting and full of learning experiences.
+            "I'm a passionate web developer with a strong focus on creating innovative and user-friendly applications. My journey in the world of coding has been exciting and full of learning experiences.
             </p>
             <p className="text-gray-300 text-lg">
-              Currently pursuing my B.Tech in Computer Science and Engineering, I've honed my skills in the MERN stack and responsive web design. I love taking on challenging projects and turning ideas into reality.
+            Currently pursuing my B.Tech in Computer Science and Engineering, I am also a cybersecurity and ethical hacking enthusiast. I've honed my skills in the MERN stack and responsive web design. I love taking on challenging projects and turning ideas into reality."
             </p>
           </motion.div>
         </div>
