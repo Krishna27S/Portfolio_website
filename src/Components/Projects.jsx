@@ -14,7 +14,7 @@ const projects = [
   {
     title: "Portfolio Website",
     description: "A personal portfolio website showcasing my projects and skills.",
-    image: "/assets/portfolio.png",
+    image: "/assets/portfolio1.png",
     technologies: "React.js, Tailwind CSS",
     github: "https://github.com/abhinavx04/portfolio-website",
     live: "https://portfolio-website-silk-xi-60.vercel.app/"

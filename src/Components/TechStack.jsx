@@ -32,17 +32,25 @@ function TechStack() {
     }),
     hover: {
       scale: 1.05,
-      rotateY: 5,
-      rotateX: 5,
-      boxShadow: "0 0 25px rgba(0, 255, 255, 0.5)",
+      rotateY: 180,
       transition: {
-        duration: 0.3,
+        duration: 0.8,
+        ease: "easeInOut",
       },
     },
     tap: {
       scale: 0.95,
       rotateY: 0,
-      rotateX: 0,
+    },
+  };
+
+  const iconVariants = {
+    hover: {
+      rotateY: 180,
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut",
+      },
     },
   };
 
@@ -128,12 +136,13 @@ function TechStack() {
                 variants={movingVariants}
                 custom={index}
               >
-                <div 
+                <motion.div 
                   className="w-16 h-16 rounded-full flex items-center justify-center mb-4" 
                   style={{ backgroundColor: tech.color }}
+                  variants={iconVariants}
                 >
                   <span className="text-2xl font-bold text-white">{tech.abbr}</span>
-                </div>
+                </motion.div>
                 <motion.h3 
                   className="text-lg font-semibold text-white"
                   initial={{ opacity: 0 }}
